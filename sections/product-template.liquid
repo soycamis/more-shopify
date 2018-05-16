@@ -189,7 +189,7 @@
         </div>
 
         <div class="product-single__description rte" itemprop="description">
-          {% include 'product-description-tabs' %}
+          {{ product.description }}
         </div>
 
         {% if section.settings.show_share_buttons %}
