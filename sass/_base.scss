@@ -1,0 +1,104 @@
+// Global styles for the project.
+
+body, html {
+  font-size: $font-size;
+}
+
+*:focus {
+  outline: none;
+}
+
+input,
+input:focus,
+textarea,
+textarea:focus {
+  border: 1px solid #CCC;
+}
+
+// Sticky footer
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  
+  main {
+    flex: 1;
+    padding-top: 0;
+  }
+}
+
+// Resets the top and bottom margins to zero, so that the sections are blocks
+#MainContent {
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+// Set margin-top footer
+.site-footer {
+  margin: 0 !important;
+}
+
+.js-drawer-open-top .drawer--top {
+  top: 15% !important;
+  transform: translateY(15%) !important;
+}
+
+// GETMORE HEADER
+
+.getmore-header {
+  .transparent-bg {
+    background-color: transparent !important;
+  }
+  .getmore-logoCenter--fix {
+    display: flex;
+    flex-direction: column;
+  }
+  .site-header, #AccessibleNav{
+  	transition: background-color 0.35s ease;
+  }
+}
+
+.hero__parallax {
+background-attachment: fixed;
+}
+
+.mc-bg-cover{
+  background-size: cover;
+}
+
+.cover {
+    display: table;
+    width: 100%;
+}
+
+.cover_inner{
+  .mega-title{
+  	color: #fff !important;
+  }
+  .mega-subtitle{
+  	color: #fff !important;
+  }
+}
+.clearfix:after{
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.cover-right{
+	float:right;
+}
+.cover-center{
+	margin: 0 auto;
+}
+.btn_round {
+	border-radius: 2em;
+}
+#contact_form .newsletter__submit{
+	margin-top: 0;
+}
