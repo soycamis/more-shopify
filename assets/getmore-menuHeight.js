@@ -20,5 +20,5 @@ when the menu is activated the stycky option.
          }
       }
     };
-  }
+  };
 })();
