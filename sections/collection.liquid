@@ -1,0 +1,239 @@
+<style>
+  #id-{{section.id}} .section-header h2.bg_header {
+    display: inline-block;
+    background-image: url('{{section.settings.header_bg | img_url: '300x50' }}');
+    padding: 5px 10px;
+  }
+  #id-{{section.id}}.bg_container {
+  	background-image: url('{{section.settings.bg-desk | img_url: '1200x500' }}');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  @media only screen and (max-width: 749px){
+    #id-{{section.id}}.bg_container_mob {
+      background-image: url('{{section.settings.bg-mobile | img_url: '640x640' }}');
+    }
+  }
+</style>
+<div id="id-{{section.id}}" class="page-width {% if section.settings.bg-desk != blank %}bg_container{% endif %} {% if section.settings.bg-mobile != blank %}bg_container_mob{% endif %}">
+  {% if section.settings.title != blank %}
+    <div class="section-header  text-{{section.settings.text-aligment-title}}">
+      <h2 class="{% if section.settings.header_bg != blank %}bg_header{% endif %}">{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+
+  {%- assign collection = collections[section.settings.collection] -%}
+
+  {% case section.settings.grid %}
+    {% when 2 %}
+      {%- assign max_height = 530 -%}
+      {%- assign grid_item_width = 'medium-up--one-half' -%}
+    {% when 3 %}
+      {%- assign max_height = 345 -%}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+    {% when 4 %}
+      {%- assign max_height = 250 -%}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+    {% when 5 %}
+      {%- assign max_height = 195 -%}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+  {% endcase %}
+
+  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+
+  <div class="grid grid--uniform grid--view-items">
+    {% for product in collection.products limit: product_limit %}
+      <div class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+        {% include 'product-card-grid', max_height: max_height %}
+      </div>
+    {% else %}
+
+      {% for i in (1..product_limit) %}
+        <div class="grid__item .grid__item--{{section.id}} {{ grid_item_width }}">
+          <div class="grid-view-item text-{{section.settings.text-aligment}}">
+            <a href="#" class="grid-view-item__link">
+              <div class="grid-view-item__image">
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="h4 grid-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+              <div class="grid-view-item__meta">
+                {% include 'product-price' %}
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+  {% if section.settings.show_view_all %}
+    <div class="text-center">
+      <a href="{{ collection.url }}" class=" btn {% if section.settings.round_button %} btn_round {% endif %} {% if section.settings.button_color != blank%} {{ section.settings.button_color }} {% endif %} {% if section.settings.button_text_color != blank%} {{section.settings.button_text_color}} {% endif %}">
+         {{ section.settings.btn_text }}
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "Products per row",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "label": "Rows",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "default": 2
+      },
+	  {
+		"type": "image_picker",
+		"id": "header_bg",
+		"label": "Background Image Header"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "bg-desk",
+		"label": "Background Image Section Desktop"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "bg-mobile",
+		"label": "Background Image Section Mobile"
+	  },
+	  {
+        "type": "select",
+        "id": "text-aligment",
+        "label": "Text Aligment Collections",
+		"default": "center",
+		"options": [
+         {
+           "value": "left",
+           "label": "Left"
+         },
+         {
+           "value": "center",
+           "label": "Center"
+         },
+		 {
+           "value": "right",
+           "label": "Right"
+         }
+   		]
+      },
+ 	  {
+        "type": "select",
+        "id": "text-aligment-title",
+        "label": "Text Aligment Title",
+		"default": "center",
+		"options": [
+         {
+           "value": "left",
+           "label": "Left"
+         },
+         {
+           "value": "center",
+           "label": "Center"
+         },
+		 {
+           "value": "right",
+           "label": "Right"
+         }
+   		]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendors",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_view_all",
+        "label": "Show 'View all' button",
+        "default": false
+      },
+ 	  {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button text",
+        "default": "View all"
+      },
+	  {
+        "type": "checkbox",
+        "id": "round_button",
+        "label": "Show 'View all' button rounded",
+        "default": false
+      },
+	  {
+        "type": "select",
+        "id": "button_color",
+        "label": "Button Color",
+		"options": [
+         {
+           "value": "btn_bg_main",
+           "label": "Primary Color"
+         },
+         {
+           "value": "btn_bg_second",
+           "label": "Secondary Color"
+         },
+		 {
+           "value": "btn_bg_third",
+           "label": "Tertiary Color"
+         }
+   		]
+      },
+	  {
+        "type": "select",
+        "id": "button_text_color",
+        "label": "Button Text Color",
+		"options": [
+         {
+           "value": "text-color-main",
+           "label": "Primary Color"
+         },
+         {
+           "value": "text-color-second",
+           "label": "Secondary Color"
+         },
+		 {
+           "value": "text-color-third",
+           "label": "Tertiary Color"
+         }
+   		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collection",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

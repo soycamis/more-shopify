@@ -1,0 +1,342 @@
+{%- assign social_icons = false -%}
+
+{% if
+  settings.social_twitter_link != blank
+  or settings.social_twitter_icon != blank
+  or settings.social_facebook_link != blank
+  or settings.social_facebook_icon != blank
+  or settings.social_pinterest_link != blank
+  or settings.social_pinterest_icon != blank
+  or settings.social_instagram_link != blank
+  or settings.social_instagram_icon != blank
+  or settings.social_tumblr_link != blank
+  or settings.social_tumblr_icon != blank
+  or settings.social_snapchat_link != blank
+  or settings.social_snapchat_icon != blank
+  or settings.social_youtube_link != blank
+  or settings.social_youtube_icon != blank
+  or settings.social_vimeo_link != blank
+  or settings.social_vimeo_icon != blank
+  or template.name == 'article'
+  or template.name == 'blog'
+%}
+  {%- assign social_icons = true -%}
+{% endif %}
+<style>
+  .site-footer{
+    {% if section.settings.bg_footer != blank %}background-image : url('{{section.settings.bg_footer | img_url: '2400x',  format: 'pjpg' }}');{% endif %}
+      background-color : {{section.settings.background_color}};
+      padding: {{section.settings.footer_height}}vh 0;
+  }
+  
+  @media only screen and (max-width: 749px){
+    .site-footer{
+     {% if section.settings.bg_footer_mobile != blank %} background-image : url('{{section.settings.bg_footer_mobile | img_url: '420x420'}}'); {% endif %}
+      margin: 35px 0 0 0;     
+    }
+  }
+</style>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="page-width">
+    {% if section.settings.logo%}
+      <div class="text-{{section.settings.logo_align}}">
+          <img class="logo_footer" src="{{section.settings.logo | img_url}}"/>
+      </div>
+    {% endif %}
+    <div class="grid grid--no-gutters">
+      <div class="grid__item{% if section.settings.footer_newsletter_enable and section.settings.footer_linklist_two != blank %} medium-up--one-quarter{% elsif section.settings.footer_linklist_two == blank and section.settings.footer_newsletter_enable %} medium-up--one-half{% else %} text-{{section.settings.menu_position}}{% endif %}">
+        {% if linklists[section.settings.footer_linklist].links.size > 0 %}
+          <ul class="site-footer__linklist{% unless section.settings.footer_newsletter_enable %} site-footer__linklist--center{% endunless %}">
+            {% for link in linklists[section.settings.footer_linklist].links %}
+              <li class="site-footer__linklist-item">
+                <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <div class="grid__item{% if section.settings.footer_newsletter_enable and section.settings.footer_linklist != blank %} medium-up--one-quarter{% elsif section.settings.footer_linklist == blank and section.settings.footer_newsletter_enable %} medium-up--one-half{% else %} text-{{section.settings.menu_position}}{% endif %}">
+        {% if linklists[section.settings.footer_linklist_two].links.size > 0 %}
+          <ul class="site-footer__linklist{% unless section.settings.footer_newsletter_enable %} site-footer__linklist--center{% endunless %}">
+            {% for link in linklists[section.settings.footer_linklist_two].links %}
+              <li class="site-footer__linklist-item">
+                <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      {% if section.settings.footer_newsletter_enable %}
+        <div class="grid__item medium-up--one-half">
+          <div class="site-footer__newsletter">
+            {% form 'customer' %}
+              {{ form.errors | default_errors }}
+              {% if form.posted_successfully? %}
+                <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+              {% else %}
+                <label for="Email" class="h4">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+                <div class="input-group">
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email"
+                    name="contact[email]"
+                    id="Email"
+                    class="input-group__field newsletter__input"
+                    value="{% if customer %}{{ customer.email }}{% endif %}"
+                    placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+                    autocorrect="off"
+                    autocapitalize="off">
+                  <span class="input-group__btn">
+                    <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe">
+                      <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+                    </button>
+                  </span>
+                </div>
+              {% endif %}
+            {% endform %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="grid grid--no-gutters">
+      {% if social_icons %}
+        <div class="grid__item{% if section.settings.footer_newsletter_enable %} medium-up--one-half{% else %} text-center{% endif %}">
+          <ul class="list--inline site-footer__social-icons social-icons">
+            {% if settings.social_facebook_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+                  {% if  settings.social_facebook_icon != blank%}
+                  <img src="{{settings.social_facebook_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-facebook' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">Facebook</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_twitter_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
+                  {% if  settings.social_twitter_icon != blank%}
+                    <img src="{{settings.social_twitter_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-twitter' %}
+                  {% endif %}
+                  
+                  <span class="icon__fallback-text">Twitter</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_pinterest_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
+                  {% if  settings.social_pinterest_icon != blank%}
+                    <img src="{{settings.social_pinterest_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-pinterest' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">Pinterest</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_instagram_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
+				  {% if  settings.social_instagram_icon != blank%}
+                    <img src="{{settings.social_instagram_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-instagram' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">Instagram</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_tumblr_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
+                  {% if  settings.social_tumblr_icon != blank%}
+                    <img src="{{settings.social_tumblr_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-tumblr' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">Tumblr</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_snapchat_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}">
+                  {% if  settings.social_snapchat_icon != blank%}
+                    <img src="{{settings.social_snapchat_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-snapchat' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">Snapchat</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_youtube_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
+                  {% if  settings.social_youtube_icon != blank%}
+                    <img src="{{settings.social_youtube_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-youtube' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">YouTube</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if settings.social_vimeo_link != blank %}
+              <li>
+                <a class="social-icons__link" href="{{ settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
+                  {% if  settings.social_vimeo_icon != blank%}
+                    <img src="{{settings.social_vimeo_icon | img_url}}"/>
+                  {%else%}
+                  	{% include 'icon-vimeo' %}
+                  {% endif %}
+                  <span class="icon__fallback-text">Vimeo</span>
+                </a>
+              </li>
+            {% endif %}
+            {% if template.name == 'blog' or template.name == 'article' %}
+              <li>
+                <a class="social-icons__link" href="{{ shop.url }}{{ blog.url }}.atom">
+                  {% include 'icon-rss' %}
+                  <span class="icon__fallback-text">RSS</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <div class="grid__item{% if section.settings.footer_newsletter_enable and social_icons == true %} medium-up--one-half{% else %} text-center{% endif %}">
+        <div class="site-footer__copyright{% if social_icons and section.settings.footer_newsletter_enable != blank %} site-footer__copyright--right medium-up--text-right{% elsif social_icons == false and section.settings.footer_newsletter_enable %} medium-up--text-left{% endif %}">
+          {% unless social_icons and section.settings.footer_newsletter_enable and section.settings.show_payment_icons %}
+          {% endunless %}
+          {% if section.settings.show_payment_icons %}
+            <div class="site-footer__payment-icons{% unless social_icons or section.settings.footer_newsletter_enable == blank %} site-footer__payment-icons--right{% endunless %}">
+              {% unless shop.enabled_payment_types == empty %}
+                {%- assign payment_icons_available = 'amazon_payments,american_express,apple_pay,bitcoin,cirrus,dankort,diners_club,discover,dogecoin,dwolla,forbrugsforeningen,interac,jcb,klarna,litecoin,maestro,master,paypal,stripe,shopify_pay,visa' | split: ',' -%}
+                <ul class="payment-icons list--inline">
+                  {% for type in shop.enabled_payment_types %}
+                    {% if payment_icons_available contains type %}
+                      <li class="payment-icon">
+                        {%- assign icon_name = type | prepend: 'icon-' -%}
+                        {% include icon_name %}
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              {% endunless %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "footer_linklist",
+        "label": "Primary menu",
+        "default": "footer",
+        "info": "This menu won't show dropdown items"
+      },
+      {
+         "type":      "select",
+         "id":        "menu_position",
+         "label":     "Menu position",
+         "options": [
+           {
+             "value": "left",
+             "label": "Left"
+           },
+		   {
+             "value": "center",
+             "label": "Center"
+           },
+           {
+             "value": "right",
+             "label": "Right"
+           }
+         ],
+         "default":   "center"
+      },
+	  {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo Image"
+      },
+ 		{
+         "type":"select",
+         "id":"logo_align",
+         "label":"Logo position",
+         "options": [
+           {
+             "value": "left",
+             "label": "Left"
+           },
+		   {
+             "value": "center",
+             "label": "Center"
+           },
+           {
+             "value": "right",
+             "label": "Right"
+           }
+         ],
+         "default":   "center"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist_two",
+        "label": "Additional menu",
+        "default": "main-menu",
+        "info": "This menu won't show dropdown items"
+      },
+      {
+        "type": "checkbox",
+        "id": "footer_newsletter_enable",
+        "label": "Show newsletter signup",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show payment icons",
+        "default": false
+      },
+	  {
+		"type": "color",
+		"id": "background_color",
+		"label": "Background Color",
+		"info": "If brackground image is set, background color is not visible "
+	  },
+      {
+        "type": "image_picker",
+        "id": "bg_footer",
+        "label": "Background Image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "bg_footer_mobile",
+        "label": "Background Image mobile"
+      },
+	  {
+		"type": "number",
+		"id": "footer_height",
+		"label": "Footer height"
+	  }
+    ]
+  }
+{% endschema %}
