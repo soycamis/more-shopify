@@ -19,25 +19,38 @@
         margin: 0;
       }
     {% endif %}
-    
-    
   </style>
 {% endif %}
 
-{% if section.settings.sticky_menu == "sticky_transparent" and template.name == 'index' %}
-  {{ 'getmore-menuHeight.js' | asset_url | script_tag }}
-{% endif %}
-
-
-{% if section.settings.sticky_menu == "only_sticky"  or  template.name != 'index' and section.settings.sticky_menu == "sticky_transparent" or section.settings.sticky_menu == "only_sticky"%}
+{% if section.settings.sticky_menu == "only_sticky" %}
 <style>
-  .getmore-PageContainer{
-  	padding-top: 80px;
+  #shopify-section-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
   }
 </style>
 {% endif %}
 
+{% if section.settings.sticky_menu == "sticky_transparent" and template.name == "index" %}
+<style>
+  #shopify-section-header {
+    position: fixed;
+    top: 0;
+    z-index: 20;
+  }
+</style>
+{% endif %}
 
+{% if section.settings.sticky_menu == "sticky_transparent" and template.name != "index" %}
+<style>
+  #shopify-section-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+</style>
+{% endif %}
 
 <div class="getmore-header {% if section.settings.sticky_menu != "none" %}getmore-menu--sticky {% endif %}" data-section-id="{{ section.id }}" data-section-type="header-section">
   <nav class="mobile-nav-wrapper medium-up--hide" role="navigation" style="background-color: {{section.settings.menu_mobile_color}}">
@@ -64,7 +77,7 @@
                     <span class="icon__fallback-text">{{ 'layout.navigation.collapse' | t }}</span>
                   </button>
                 </div>
-                <a href="{{ link.url }}" class="mobile-nav__sublist-linhttps://more-co-mx.myshopify.com/admink mobile-nav__sublist-header"{% if link.active %} aria-current="page"{% endif %}>
+                <a href="{{ link.url }}" class="mobile-nav__sublist-link mobile-nav__sublist-header"{% if link.active %} aria-current="page"{% endif %}>
                   {{ link.title }}
                 </a>
               </div>
@@ -298,6 +311,10 @@
   {% endif %}
 </div>
 
+{% if section.settings.sticky_menu == "sticky_transparent" and template.name == 'index' %}
+  {{ 'getmore-menuHeight.js' | asset_url | script_tag }}
+{% endif %}
+
 {% schema %}
   {
     "name": "Header",
@@ -365,7 +382,7 @@
         "type": "text",
         "id": "icon_size",
         "label": "Custom icon size (in pixels)",
-        "default": "20"
+        "default": "22"
       },
       {
         "type": "image_picker",

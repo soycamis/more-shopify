@@ -1,16 +1,6 @@
-<style>
-  #shopify-section-{{section.id}} .mc-bg-cover.bg_desk{
-    background-image: url('{{ section.settings.image | img_url: '1400x1200' }}');
-  }
-  @media only screen and (max-width: 749px){
-  	#shopify-section-{{section.id}} .mc-bg-cover.bg_mob{
-      background-image: url('{{ section.settings.image_mobile | img_url: '640x640' }}');
-    }	
-  }
-
-</style>
-
-<a href="{% if section.settings.cover_link != blank %} {{section.settings.cover_link}} {% else %} javascript:void(0); {% endif %}" target="_blank">
+{% if section.settings.cover_link != blank %}
+  <a href="{{ section.settings.cover_link }}">
+{% endif %}
   <div class="cover mc-bg-cover hero--{{ section.settings.hero_size }}{% if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank %} hero__overlay{% endif %}{% if section.settings.parallax%} hero__parallax {% endif %} 
               box ratio-container lazyload  
               {% if section.settings.image  != blank %} bg_desk {% endif %}
@@ -42,9 +32,21 @@
           {% endif %}
         </div>
       </div>
-  
   </div>
-    </a>
+</a>
+
+<style>
+  #shopify-section-{{section.id}} .mc-bg-cover.bg_desk{
+    background-image: url('{{ section.settings.image | img_url: '1400x1200' }}');
+  }
+  @media only screen and (max-width: 749px){
+  	#shopify-section-{{section.id}} .mc-bg-cover.bg_mob{
+      background-image: url('{{ section.settings.image_mobile | img_url: '640x640' }}');
+    }	
+  }
+
+</style>
+
 {% schema %}
   {
     "name": "Cover plus",

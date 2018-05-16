@@ -33,7 +33,10 @@
   {% include 'social-meta-tags' %}
 
   {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
-  {% include 'google-fonts' %}
+  <!-- Assets GETMORE.MX -->
+  <!-- CSS -->
+  {{ 'index.css' | asset_url | stylesheet_tag }}
+  {% comment %} {% include 'google-fonts' %} {% endcomment %}
 
   <script>
     var theme = {
@@ -109,10 +112,6 @@
 
   </div>
   </div>
-  <!-- Assets GETMORE.MX -->
-  <!-- CSS -->
-  {{ 'getmore.scss.css' | asset_url | stylesheet_tag }}
-  
   <!-- JS -->
 </body>
 </html>
