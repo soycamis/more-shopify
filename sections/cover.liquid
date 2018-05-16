@@ -1,0 +1,249 @@
+<style>
+  #shopify-section-{{section.id}} .mc-bg-cover.bg_desk{
+    background-image: url('{{ section.settings.image | img_url: '1400x1200' }}');
+  }
+  @media only screen and (max-width: 749px){
+  	#shopify-section-{{section.id}} .mc-bg-cover.bg_mob{
+      background-image: url('{{ section.settings.image_mobile | img_url: '640x640' }}');
+    }	
+  }
+
+</style>
+
+<a href="{% if section.settings.cover_link != blank %} {{section.settings.cover_link}} {% else %} javascript:void(0); {% endif %}" target="_blank">
+  <div class="cover mc-bg-cover hero--{{ section.settings.hero_size }}{% if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank %} hero__overlay{% endif %}{% if section.settings.parallax%} hero__parallax {% endif %} 
+              box ratio-container lazyload  
+              {% if section.settings.image  != blank %} bg_desk {% endif %}
+              {% if section.settings.image_mobile != blank %} bg_mob {% endif %}
+              {% if section.settings.hide_mobile %} small--hide {% endif %}"
+       {% if section.settings.image %}
+       style="background-position: {{ section.settings.alignment }};"
+       {% endif %}>
+
+      {% if section.settings.image == blank %}
+        <div class="placeholder-background">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+      <div class="cover_inner hero__inner">
+        <div class="page-width text-{{section.settings.position_content}} ">
+          {% if section.settings.title != blank %}
+            <h2 class="h1 mega-title{% if section.settings.text_size == 'large' %} mega-title--large{% endif %}" style="width: {{section.settings.width_title}}%">{{ section.settings.title | escape }}</h2>
+          {% endif %}
+          {% if section.settings.text != blank %}
+          <div class="clearfix">  
+          	<div class="cover-{{section.settings.position_content}} rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}" style="width: {{section.settings.width_text}}%">{{ section.settings.text }}</div>
+          </div>
+          {% endif %}
+          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+            <button onclick= "document.location.href = '{{section.settings.button_link}}'; return false" class="btn btn_cover{% if section.settings.button_color != blank%} {{ section.settings.button_color }} {% endif %}{% if section.settings.button_text_color != blank%} {{section.settings.button_text_color}} {% endif %}">
+              {{ section.settings.button_label | escape }}
+            </button>
+          {% endif %}
+        </div>
+      </div>
+  
+  </div>
+    </a>
+{% schema %}
+  {
+    "name": "Cover plus",
+    "class": "index-section index-section--flush",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image mobile"
+      },
+	  {
+        "type": "checkbox",
+        "id": "parallax",
+        "label": "Parallax"
+      },
+	  {
+        "type": "checkbox",
+        "id": "hide_mobile",
+        "label": "Hide on mobile"
+      },
+  	  {
+        "type": "url",
+        "id": "cover_link",
+        "label": "Cover link"
+      },
+      {
+        "type": "select",
+        "id": "alignment",
+        "label": "Image alignment",
+        "default": "center",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Middle"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text overlay"
+      },
+	  {
+        "type": "text",
+        "id": "width_title",
+        "label": "Width Title",
+        "default": "auto",
+		"info": "Write a number between 0 and 100"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+      },
+	  {
+        "type": "text",
+        "id": "width_text",
+        "label": "Width Text",
+        "default": "auto",
+		"info": "Write a number between 0 and 100"
+      },
+	  {
+        "type": "select",
+        "id": "position_content",
+        "label": "Position content",
+		"default": "center",
+		"options": [
+         {
+           "value": "left",
+           "label": "Left"
+         },
+         {
+           "value": "center",
+           "label": "Center"
+         },
+		 {
+           "value": "right",
+           "label": "Right"
+         }
+   		]
+      },
+      {
+        "type": "select",
+        "id": "hero_size",
+        "label": "Section height",
+        "default": "medium",
+        "options": [
+          {
+            "label": "Extra Small",
+            "value": "x-small"
+          },
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Extra Large",
+            "value": "x-large"
+          },
+		  {
+			"label": "Widescreen",
+			"value": "widescreen"
+		  }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "text_size",
+        "label": "Text size",
+        "default": "medium",
+        "options": [
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label",
+		"info": "Need a link to display button on view"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      },
+	  {
+        "type": "select",
+        "id": "button_color",
+        "label": "Button Color",
+		"options": [
+         {
+           "value": "btn_bg_main",
+           "label": "Primary Color"
+         },
+         {
+           "value": "btn_bg_second",
+           "label": "Secondary Color"
+         },
+		 {
+           "value": "btn_bg_third",
+           "label": "Tertiary Color"
+         }
+   		]
+      },
+	  {
+        "type": "select",
+        "id": "button_text_color",
+        "label": "Button Text Color",
+		"options": [
+         {
+           "value": "text-color-main",
+           "label": "Primary Color"
+         },
+         {
+           "value": "text-color-second",
+           "label": "Secondary Color"
+         },
+		 {
+           "value": "text-color-third",
+           "label": "Tertiary Color"
+         }
+   		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Cover Plus",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
