@@ -58,7 +58,7 @@
       padding: 28px 10px;
     }
     #SiteNav > li a:hover {
-      background-color: tomato;
+      background-color: {{ section.settings.hover_color }};
       color: {{ section.settings.hover_color_text }}
     }
     #SiteNav .site-nav__dropdown {
@@ -355,12 +355,14 @@
       {
         "id": "hover_color",
 		    "type": "color",
-		    "label": "color"
+		    "label": "color hover",
+        "default": "#ffffff"
       },
       {
         "id": "hover_color_text",
 		    "type": "color",
-		    "label": "color"
+		    "label": "text hover",
+        "default": "#ffffff"
       },
       {
         "type": "header",
