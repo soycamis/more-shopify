@@ -23,33 +23,48 @@
 {% endif %}
 
 {% if section.settings.sticky_menu == "only_sticky" %}
-<style>
-  #shopify-section-header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-  }
-</style>
+  <style>
+    #shopify-section-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+  </style>
 {% endif %}
 
 {% if section.settings.sticky_menu == "sticky_transparent" and template.name == "index" %}
-<style>
-  #shopify-section-header {
-    position: fixed;
-    top: 0;
-    z-index: 20;
-  }
-</style>
+  <style>
+    #shopify-section-header {
+      position: fixed;
+      top: 0;
+      z-index: 20;
+    }
+  </style>
 {% endif %}
 
 {% if section.settings.sticky_menu == "sticky_transparent" and template.name != "index" %}
-<style>
-  #shopify-section-header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-  }
-</style>
+  <style>
+    #shopify-section-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+  </style>
+{% endif %}
+
+{% if section.settings.hover_color != "#ffffff" %}
+  <style>
+    #SiteNav > li a {
+      padding: 28px 10px;
+    }
+    #SiteNav > li a:hover {
+      background-color: tomato;
+      color: {{ section.settings.hover_color_text }}
+    }
+    #SiteNav .site-nav__dropdown {
+      padding-right: 0;
+    }
+  </style>
 {% endif %}
 
 <div class="getmore-header {% if section.settings.sticky_menu != "none" %}getmore-menu--sticky {% endif %}" data-section-id="{{ section.id }}" data-section-type="header-section">
@@ -326,14 +341,26 @@
       {
         "type": "radio",
         "id": "sticky_menu",
-        "label": "Use sticky menu",
-		"default": "none",
-		"options":[
-			{"value": "sticky_transparent", "label":"Sticky and transparent"},
-			{"value": "only_sticky", "label":"Only sticky"},
-			{"value": "none", "label":"None"}
-		
-		]	
+        "label": "use sticky menu",
+        "default": "none",
+        "options":[
+          {"value": "sticky_transparent", "label":"sticky and transparent"},
+          {"value": "only_sticky", "label":"only sticky"},
+          {"value": "none", "label":"default"}
+        ]},
+       {
+        "type": "header",
+        "content": "items hover"
+      },
+      {
+        "id": "hover_color",
+		    "type": "color",
+		    "label": "color"
+      },
+      {
+        "id": "hover_color_text",
+		    "type": "color",
+		    "label": "color"
       },
       {
         "type": "header",
@@ -345,8 +372,8 @@
         "label": "item menu alignment",
         "default": "center",
         "options": [
-          {"value": "center", "label": "Center"},
-          {"value": "right", "label": "Right"}
+          {"value": "center", "label": "center"},
+          {"value": "right", "label": "right"}
         ]
       },
       {
@@ -356,22 +383,22 @@
       {
         "type": "radio",
         "id": "align_logo",
-        "label": "Logo alignment",
+        "label": "logo alignment",
         "default": "left",
         "options": [
-          {"value": "left", "label": "Left"},
-          {"value": "center", "label": "Centered"}
+          {"value": "left", "label": "left"},
+          {"value": "center", "label": "centered"}
         ]
       },
       {
         "type": "image_picker",
         "id": "logo",
-        "label": "Logo image"
+        "label": "logo image"
       },
       {
         "type": "text",
         "id": "logo_max_width",
-        "label": "Custom logo width (in pixels)",
+        "label": "custom logo width (in pixels)",
         "default": "100"
       },
       {
@@ -381,25 +408,25 @@
 	  {
         "type": "text",
         "id": "icon_size",
-        "label": "Custom icon size (in pixels)",
+        "label": "custom icon size (in pixels)",
         "default": "22"
       },
       {
         "type": "image_picker",
         "id": "icon_search",
-        "label": "Icon search",
-		"info": "Size of icon dependes from width icon input"
+        "label": "icon search",
+		"info": "size of icon dependes from width icon input"
       },
       {
         "type": "image_picker",
         "id": "icon_cart",
-        "label": "Icon cart",
-		"info": "Size of icon dependes from width icon input"
+        "label": "icon cart",
+		"info": "size of icon dependes from width icon input"
       },
 	  {
 		"id": "count_cart_color",
 		"type": "color",
-		"label": "Color for background count items cart",
+		"label": "color for background count items cart",
 		"default": "#ffffff"
 	  },
       {
@@ -419,19 +446,19 @@
       {
         "type": "color",
         "id": "background_color",
-        "label": "Background color",
+        "label": "background color",
         "default": "#ffffff"
       },
 	  {
 		"id": "menu_mobile_color",
 		"type": "color",
-		"label": "Background mobile color",
+		"label": "background mobile color",
 		"default": "#ffffff"
 	  },
 	  {
 		"id": "submenu_color",
 		"type": "color",
-		"label": "Background submenu",
+		"label": "background submenu",
 		"default": "#ffffff"
 	  },
 
@@ -442,37 +469,37 @@
       {
         "type": "checkbox",
         "id": "message",
-        "label": "Show announcement",
+        "label": "show announcement",
         "default": false
       },
       {
         "type": "checkbox",
         "id": "home_page_only",
-        "label": "Home page only",
+        "label": "home page only",
         "default": true
       },
       {
         "type": "text",
         "id": "message_text",
-        "label": "Announcement text",
+        "label": "announcement text",
         "default": "Announce something here"
       },
       {
         "type": "url",
         "id": "message_link",
-        "label": "Announcement link",
+        "label": "announcement link",
         "info": "Optional"
       },
       {
         "type": "color",
         "id": "color_bg",
-        "label": "Bar",
+        "label": "background color",
         "default": "#7796a8"
       },
       {
         "type": "color",
         "id": "color_text",
-        "label": "Text",
+        "label": "text color",
         "default": "#fff"
       }
     ]
