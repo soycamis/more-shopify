@@ -15,6 +15,18 @@
     }
   }
 </style>
+
+{% assign strokeButton = false %}
+{% if section.settings.stroke_button %}
+  {% assign strokeButton = true %}
+  <style>
+    .isStrokeButton {
+      background-color: transparent;
+      border: 1px solid {{ section.settings.stroke_color }};
+    }
+  </style>
+{% endif %}
+
 <div id="id-{{section.id}}" class="page-width {% if section.settings.bg-desk != blank %}bg_container{% endif %} {% if section.settings.bg-mobile != blank %}bg_container_mob{% endif %}">
   {% if section.settings.title != blank %}
     <div class="section-header  text-{{section.settings.text-aligment-title}}">
@@ -69,7 +81,7 @@
 
   {% if section.settings.show_view_all %}
     <div class="text-center">
-      <a href="{{ collection.url }}" class=" btn {% if section.settings.round_button %} btn_round {% endif %} {% if section.settings.button_color != blank%} {{ section.settings.button_color }} {% endif %} {% if section.settings.button_text_color != blank%} {{section.settings.button_text_color}} {% endif %}">
+      <a href="{{ collection.url }}" class=" btn {% if section.settings.round_button %} btn_round {% endif %} {% if section.settings.button_color != blank%} {{ section.settings.button_color }} {% endif %} {% if section.settings.button_text_color != blank%} {{section.settings.button_text_color}} {% endif %} {%if strokeButton %} isStrokeButton {% endif %}">
          {{ section.settings.btn_text }}
       </a>
     </div>
@@ -187,8 +199,20 @@
 	  {
         "type": "checkbox",
         "id": "round_button",
-        "label": "Show 'View all' button rounded",
+        "label": "Show 'View All' button rounded",
         "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "stroke_button",
+        "label": "Show 'View All' button stroke",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "stroke_color",
+        "label": "Color stroke button",
+        "default": "#ffffff"
       },
 	  {
         "type": "select",
