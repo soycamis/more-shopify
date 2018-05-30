@@ -112,7 +112,7 @@
           <ul class="list--inline site-footer__social-icons social-icons">
             {% if settings.social_facebook_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+                <a class="social-icons__link" href="{{ settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}" target="_blank">
                   {% if  settings.social_facebook_icon != blank%}
                   <img src="{{settings.social_facebook_icon | img_url}}"/>
                   {%else%}
@@ -124,7 +124,7 @@
             {% endif %}
             {% if settings.social_twitter_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
+                <a class="social-icons__link" href="{{ settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}" target="_blank">
                   {% if  settings.social_twitter_icon != blank%}
                     <img src="{{settings.social_twitter_icon | img_url}}"/>
                   {%else%}
@@ -137,7 +137,7 @@
             {% endif %}
             {% if settings.social_pinterest_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
+                <a class="social-icons__link" href="{{ settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}" target="_blank">
                   {% if  settings.social_pinterest_icon != blank%}
                     <img src="{{settings.social_pinterest_icon | img_url}}"/>
                   {%else%}
@@ -149,7 +149,7 @@
             {% endif %}
             {% if settings.social_instagram_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
+                <a class="social-icons__link" href="{{ settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}" target="_blank">
 				  {% if  settings.social_instagram_icon != blank%}
                     <img src="{{settings.social_instagram_icon | img_url}}"/>
                   {%else%}
@@ -161,7 +161,7 @@
             {% endif %}
             {% if settings.social_tumblr_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
+                <a class="social-icons__link" href="{{ settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}" target="_blank">
                   {% if  settings.social_tumblr_icon != blank%}
                     <img src="{{settings.social_tumblr_icon | img_url}}"/>
                   {%else%}
@@ -173,7 +173,7 @@
             {% endif %}
             {% if settings.social_snapchat_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}">
+                <a class="social-icons__link" href="{{ settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}" target="_blank">
                   {% if  settings.social_snapchat_icon != blank%}
                     <img src="{{settings.social_snapchat_icon | img_url}}"/>
                   {%else%}
@@ -185,7 +185,7 @@
             {% endif %}
             {% if settings.social_youtube_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
+                <a class="social-icons__link" href="{{ settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}" target="_blank">
                   {% if  settings.social_youtube_icon != blank%}
                     <img src="{{settings.social_youtube_icon | img_url}}"/>
                   {%else%}
@@ -197,7 +197,7 @@
             {% endif %}
             {% if settings.social_vimeo_link != blank %}
               <li>
-                <a class="social-icons__link" href="{{ settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
+                <a class="social-icons__link" href="{{ settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}" target="_blank">
                   {% if  settings.social_vimeo_icon != blank%}
                     <img src="{{settings.social_vimeo_icon | img_url}}"/>
                   {%else%}
@@ -209,7 +209,7 @@
             {% endif %}
             {% if template.name == 'blog' or template.name == 'article' %}
               <li>
-                <a class="social-icons__link" href="{{ shop.url }}{{ blog.url }}.atom">
+                <a class="social-icons__link" href="{{ shop.url }}{{ blog.url }}">
                   {% include 'icon-rss' %}
                   <span class="icon__fallback-text">RSS</span>
                 </a>
