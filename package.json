@@ -28,6 +28,8 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-cli": "^2.0.1",
-    "gulp-sass": "^4.0.1"
+    "gulp-imagemin": "^4.1.0",
+    "gulp-sass": "^4.0.1",
+    "imagemin-pngquant": "^5.1.0"
   }
 }
